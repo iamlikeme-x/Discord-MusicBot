@@ -6,8 +6,12 @@ try {
   //Config for testing
   config = require("../dev-config");
 } catch {
-  //Config for production
-  config = require("../botconfig");
+  try {
+    config = require("../myconfig");
+  } catch {
+    //Config for production
+    config = require("../botconfig");
+  }
 }
 const Auth = require("./Middlewares/Auth");
 const fs = require("fs");

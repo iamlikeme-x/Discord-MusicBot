@@ -33,8 +33,15 @@ class DiscordMusicBot extends Client {
       //Config for testing
       this.botconfig = require("../dev-config");
     } catch {
-      //Config for production
-      this.botconfig = require("../botconfig");
+      try {
+        // Custom config
+        this.botconfig = require("../myconfig");
+	      console.log('custom');
+      } catch {
+        //Config to fall back to
+        this.botconfig = require("../botconfig");
+	      console.log('non custom');
+      }
     }
     if (this.botconfig.Token === "")
       return new TypeError(
