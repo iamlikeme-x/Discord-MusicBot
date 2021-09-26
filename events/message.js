@@ -17,6 +17,7 @@ module.exports = async (client, message) => {
     await client.database.guild.set(message.guild.id, {
       prefix: prefix,
       DJ: null,
+      volume: 100,
     });
     GuildDB = await client.GetGuild(message.guild.id);
   }

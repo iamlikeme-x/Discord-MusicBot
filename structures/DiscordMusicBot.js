@@ -33,8 +33,15 @@ class DiscordMusicBot extends Client {
       //Config for testing
       this.botconfig = require("../dev-config");
     } catch {
-      //Config for production
-      this.botconfig = require("../botconfig");
+      try {
+        // Custom config
+        this.botconfig = require("../myconfig");
+	      console.log('custom');
+      } catch {
+        //Config to fall back to
+        this.botconfig = require("../botconfig");
+	      console.log('non custom');
+      }
     }
     if (this.botconfig.Token === "")
       return new TypeError(
@@ -76,6 +83,7 @@ class DiscordMusicBot extends Client {
         await this.database.guild.set(interaction.guild_id, {
           prefix: this.botconfig.DefaultPrefix,
           DJ: null,
+          volume: 100
         });
         GuildDB = await this.GetGuild(interaction.guild_id);
       }
@@ -216,7 +224,11 @@ class DiscordMusicBot extends Client {
   }
 
   async GetGuild(GuildID) {
+    if (!await this.database.guild.has(GuildID)) {
+      
+    }
     return new Promise(async (res, rej) => {
+
       let guild = await this.database.guild
         .get(GuildID)
         .catch((err) => rej(err));
