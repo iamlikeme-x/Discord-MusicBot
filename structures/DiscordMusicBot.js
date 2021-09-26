@@ -83,6 +83,7 @@ class DiscordMusicBot extends Client {
         await this.database.guild.set(interaction.guild_id, {
           prefix: this.botconfig.DefaultPrefix,
           DJ: null,
+          volume: 100
         });
         GuildDB = await this.GetGuild(interaction.guild_id);
       }
@@ -223,7 +224,11 @@ class DiscordMusicBot extends Client {
   }
 
   async GetGuild(GuildID) {
+    if (!await this.database.guild.has(GuildID)) {
+      
+    }
     return new Promise(async (res, rej) => {
+
       let guild = await this.database.guild
         .get(GuildID)
         .catch((err) => rej(err));

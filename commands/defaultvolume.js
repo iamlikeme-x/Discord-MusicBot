@@ -30,7 +30,7 @@ module.exports = {
         }
         else{
             player.setVolume(vol);
-            await client.database.guild.set(message.guild_id, {
+            await client.database.guild.set(message.guild.id, {
                 prefix: GuildDB.prefix,
                 DJ: GuildDB.DJ,
                 volume: vol
