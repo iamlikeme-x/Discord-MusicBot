@@ -3,7 +3,7 @@ const { TrackUtils } = require("erela.js");
 
 module.exports = {
     name: "defaultvolume",
-    description: "Check or change the current volume",
+    description: "Check or change the default & current volume",
     usage: "<volume>",
     permissions: {
         channel: ["VIEW_CHANNEL", "SEND_MESSAGES", "EMBED_LINKS"],
@@ -26,11 +26,16 @@ module.exports = {
         if (!parseInt(args[0])) return client.sendTime(message.channel, `**Please choose a number between** \`1 - 100\``);
         let vol = parseInt(args[0]);
         if(vol < 0 || vol > 100){
-          return  client.sendTime(message.channel, "❌ | **Please Choose A Number Between `1-100`**");
+            return  client.sendTime(message.channel, "❌ | **Please Choose A Number Between `1-100`**");
         }
         else{
-        player.setVolume(vol);
-        client.sendTime(message.channel, `🔉 | **Volume set to** \`${player.volume}\``);
+            player.setVolume(vol);
+            await client.database.guild.set(interaction.guild_id, {
+                prefix: GuildDB.prefix,
+                DJ: GuildDB.DJ,
+                volume: vol
+            });
+            client.sendTime(message.channel, `🔉 | **Default volume set to** \`${player.volume}\``);
         }
     },
     SlashCommand: {
@@ -62,7 +67,7 @@ module.exports = {
             let vol = parseInt(args[0].value);
             if (!vol || vol < 1 || vol > 100) return client.sendTime(interaction, `**Please choose a number between** \`1 - 100\``);
             player.setVolume(vol);
-            GuildDB.set(interaction.guild_id, {
+            await client.database.guild.set(interaction.guild_id, {
                 prefix: GuildDB.prefix,
                 DJ: GuildDB.DJ,
                 volume: vol
