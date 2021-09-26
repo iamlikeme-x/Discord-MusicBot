@@ -63,7 +63,7 @@ module.exports = {
             if (guild.me.voice.channel && !guild.me.voice.channel.equals(member.voice.channel)) return client.sendTime(interaction, ":x: | **You must be in the same voice channel as me to use this command!**");
             let player = await client.Manager.get(interaction.guild_id);
             if (!player) return client.sendTime(interaction, "❌ | **Nothing is playing right now...**");
-            if (!args[0].value) return client.sendTime(interaction, `🔉 | Current volume \`${player.volume}\`.`);
+            if (!args || !args[0].value) return client.sendTime(interaction, `🔉 | Current volume \`${player.volume}\`.`);
             let vol = parseInt(args[0].value);
             if (!vol || vol < 1 || vol > 100) return client.sendTime(interaction, `**Please choose a number between** \`1 - 100\``);
             player.setVolume(vol);
