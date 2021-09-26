@@ -26,8 +26,9 @@ module.exports = {
         let CheckNode = client.Manager.nodes.get(client.botconfig.Lavalink.id);
         let Searching = await message.channel.send(":mag_right: Searching...");
         if (!CheckNode || !CheckNode.connected) {
-       return client.sendTime(message.channel,"❌ | **Lavalink node not connected**");
+            return client.sendTime(message.channel,"❌ | **Lavalink node not connected**");
         }
+        let volume = GuildDB.volume ?? 100;
         const player = client.Manager.create({
             guild: message.guild.id,
             voiceChannel: message.member.voice.channel.id,
@@ -39,7 +40,10 @@ module.exports = {
 
         if (!player) return client.sendTime(message.channel, "❌ | **Nothing is playing right now...**");
 
-        if (player.state != "CONNECTED") await player.connect();
+        if (player.state != "CONNECTED") {
+            await player.connect(); 
+            player.setVolume(volume);
+        } 
 
         try {
             if (SearchString.match(client.Lavasfy.spotifyPattern)) {

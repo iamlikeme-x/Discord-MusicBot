@@ -68,6 +68,7 @@ What would you like to edit?
       await client.database.guild.set(message.guild.id, {
         prefix: prefix,
         DJ: GuildDB.DJ,
+        volume: GuildDB.volume,
       });
 
       client.sendTime(
@@ -93,6 +94,7 @@ What would you like to edit?
       await client.database.guild.set(message.guild.id, {
         prefix: GuildDB.prefix,
         DJ: role.id,
+        volume: GuildDB.volume,
       });
 
       client.sendTime(
@@ -154,6 +156,7 @@ What would you like to edit?
           await client.database.guild.set(interaction.guild.id, {
             prefix: prefix,
             DJ: GuildDB.DJ,
+            volume: GuildDB.volume,
           });
           client.sendTime(interaction, `The prefix has now been set to \`${prefix}\``);
         } else {
@@ -172,6 +175,7 @@ What would you like to edit?
           await client.database.guild.set(interaction.guild.id, {
             prefix: GuildDB.prefix,
             DJ: role.id,
+            volume: GuildDB.volume,
           });
           client.sendTime(
             interaction, `Successfully changed the DJ role of this server to ${role.name}`
