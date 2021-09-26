@@ -135,7 +135,7 @@ const play = require("./play");
   
       if (error) {
         move.setColor("RED");
-        await message.channel.send(move);
+        await interaction.send(move);
         return;
       }
   
@@ -146,7 +146,7 @@ const play = require("./play");
         from = from - 1;
       }
   
-      await message.channel.send(move);
+      await interaction.send(move);
       let song = player.queue.remove(from);
       player.queue.add(song, to);
     },
