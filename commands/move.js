@@ -88,7 +88,7 @@ const play = require("./play");
    *
    * @param {import("../structures/DiscordMusicBot")} client
    * @param {import("discord.js").Message} message
-   * @param {string[]} args
+   * @param {object[]} args
    * @param {*} param3
    */
     run: async (client, interaction, args, { GuildDB }) => {
@@ -102,9 +102,9 @@ const play = require("./play");
       if (!player.queue || !player.queue.length || player.queue.length <= 1) {
          return message.channel.send("There aren't enough tracks in the queue to move");
       }
-      
-      let from = Number(args[0]);
-      let to   = Number(args[1]);
+
+      let from = Number(args[0].value);
+      let to   = Number(args[1].value);
 
       let error = false;
       let move = new MessageEmbed()
