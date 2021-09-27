@@ -56,18 +56,14 @@ const play = require("./play");
 
     if (error) {
       move.setColor("RED");
-      await interaction.send(move);
+      await message.channel.send(move);
       return;
     }
 
     let from = Number(args[0] - 1);
     let to   = Number(args[1] - 1);
 
-    if (to > from) { // Adjust for removal of original position of track
-      from = from - 1;
-    }
-
-    await interaction.send(move);
+    await message.channel.send(move);
     let song = player.queue.remove(from);
     player.queue.add(song, to);
   },
