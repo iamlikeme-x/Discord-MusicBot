@@ -33,25 +33,22 @@ const play = require("./play");
       .setDescription(`✅ **|** Removed track **\`${Number(args[0])}\`** from the queue!`)
       .setColor("GREEN")
 
-    if (isNaN(args[0])) {
+    let from = Number(from);
+    let to   = Number(to);
+
+    if (isNaN(from) || isNaN(to)) {
       error = true;
-      move.setDescription(`**Usage - **${client.botconfig.prefix}\`remove [track]\``);
+      move.setDescription(`**Usage - **\`${client.botconfig.prefix}move [from] [to]\``);
     }
 
-    if (args[0] > player.queue.length) {
+    if (from > player.queue.length || to > player.queue.length) {
       error = true;
       move.setDescription(`The queue has only ${player.queue.length} songs!`);
     }
 
-    if (args[0] == args[1]) {
+    if (from == to) {
       error = true;
       move.setDescription(`From and to cannot be the same!`);
-    }
-
-    
-    if (args[1] > player.queue.length) {
-      error = true;
-      move.setDescription(`The queue has only ${player.queue.length} songs!`);
     }
 
     if (error) {
@@ -60,12 +57,13 @@ const play = require("./play");
       return;
     }
 
-    let from = Number(args[0] - 1);
-    let to   = Number(args[1] - 1);
+    // Dehumanize numbers
+    from = from - 1;
+    to   = to   - 1;
 
-    await message.channel.send(move);
     let song = player.queue.remove(from);
     player.queue.add(song, to);
+    await message.channel.send(move);
   },
 
   SlashCommand: {
@@ -107,40 +105,38 @@ const play = require("./play");
       let move = new MessageEmbed()
         .setDescription(`✅ **|** Removed track **\`${Number(args[0])}\`** from the queue!`)
         .setColor("GREEN")
+
+      let from = Number(from);
+      let to   = Number(to);
   
-      if (isNaN(args[0])) {
+      if (isNaN(from) || isNaN(to)) {
         error = true;
-        move.setDescription(`**Usage - **${client.botconfig.prefix}\`remove [track]\``);
+        move.setDescription(`**Usage - **\`${client.botconfig.prefix}move [from] [to]\``);
       }
   
-      if (args[0] > player.queue.length) {
+      if (from > player.queue.length || to > player.queue.length) {
         error = true;
         move.setDescription(`The queue has only ${player.queue.length} songs!`);
       }
   
-      if (args[0] == args[1]) {
+      if (from == to) {
         error = true;
         move.setDescription(`From and to cannot be the same!`);
       }
-  
-      
-      if (args[1] > player.queue.length) {
-        error = true;
-        move.setDescription(`The queue has only ${player.queue.length} songs!`);
-      }
-  
+
       if (error) {
         move.setColor("RED");
         await interaction.send(move);
         return;
       }
   
-      let from = Number(args[0] - 1);
-      let to   = Number(args[1] - 1);
+      // Dehumanize numbers
+      from = from - 1;
+      to   = to   - 1;
   
-      await interaction.send(move);
       let song = player.queue.remove(from);
       player.queue.add(song, to);
+      await interaction.send(move);
     },
   }
 };
