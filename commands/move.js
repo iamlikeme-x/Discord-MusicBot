@@ -142,10 +142,6 @@ const play = require("./play");
       let from = Number(args[0] - 1);
       let to   = Number(args[1] - 1);
   
-      if (to > from) { // Adjust for removal of original position of track
-        from = from - 1;
-      }
-  
       await interaction.send(move);
       let song = player.queue.remove(from);
       player.queue.add(song, to);
