@@ -28,13 +28,14 @@ const play = require("./play");
     if (!player.queue || !player.queue.length || player.queue.length <= 1) {
        return message.channel.send("There aren't enough tracks in the queue to move");
     }
+    let from = Number(args[0]);
+    let to   = Number(args[1]);
+
     let error = false;
     let move = new MessageEmbed()
-      .setDescription(`✅ **|** Removed track **\`${Number(args[0])}\`** from the queue!`)
+      .setDescription(`✅ **|** Moved track **\`${from}\`** to position **\`${to}\`** !`)
       .setColor("GREEN")
 
-    let from = Number(from);
-    let to   = Number(to);
 
     if (isNaN(from) || isNaN(to)) {
       error = true;
@@ -101,13 +102,15 @@ const play = require("./play");
       if (!player.queue || !player.queue.length || player.queue.length <= 1) {
          return message.channel.send("There aren't enough tracks in the queue to move");
       }
+      
+      let from = Number(args[0]);
+      let to   = Number(args[1]);
+
       let error = false;
       let move = new MessageEmbed()
-        .setDescription(`✅ **|** Removed track **\`${Number(args[0])}\`** from the queue!`)
+        .setDescription(`✅ **|** Moved track **\`${from}\`** to position **\`${to}\`** !`)
         .setColor("GREEN")
 
-      let from = Number(from);
-      let to   = Number(to);
   
       if (isNaN(from) || isNaN(to)) {
         error = true;
